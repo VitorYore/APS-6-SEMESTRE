@@ -2,6 +2,7 @@ import cv2
 from deepface import DeepFace 
 import numpy as np
 import os
+import json
 
 
 def cosine_distance(a, b):
@@ -15,16 +16,25 @@ def cosine_distance(a, b):
         return 1 - (numerator / denominator)  # distância coseno
 
 # Inicializa a captura de vídeo da webcam
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
+
+# Carrega os usuários a partir do JSON
+def carregar_usuarios_json(caminho):
+    try:
+        with open(caminho, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            print(f"{len(data)} usuários carregados do arquivo JSON.")
+            return data
+    except FileNotFoundError:
+        print(f"Arquivo JSON não encontrado: {caminho}")
+    except json.JSONDecodeError as e:
+        print(f"Erro ao ler JSON: {e}")
+    return []
 
 # Lista de usuários registrados com caminho da imagem e nível de acesso
-users = [
-    {
-        "name": "Vitor",
-        "img_path": "C:/Users/User/APS-6-SEMESTRE/fotos/Vitor.jpg",
-        "access_level": 1
-    }
-]
+# Caminho do arquivo JSON
+json_path = "C:/Users/admin/Desktop/APS-CAMERA/VITOR/APS-6-SEMESTRE/Usuarios.json"
+users = carregar_usuarios_json(json_path)
 
 # Gera embeddings para cada usuário da lista
 def preparar_usuarios():
@@ -96,12 +106,13 @@ def check_face(frame):
 
         # Threshold
         threshold = 0.7
-        if min_dist <= threshold:
+        confidence = max(0, min(1, (threshold - min_dist) / threshold))
+        if min_dist <= threshold and confidence >= 0.7:
             detected_user = best_match
-            confidence = max(0, min(1, (threshold - min_dist) / threshold))
         else:
             detected_user = None
             confidence = 0.0
+        print(f"Usuário: {best_match['name'] if best_match else 'Nenhum'}, Distância: {min_dist:.3f}, Confiança: {confidence:.2%}")
 
     except Exception as e:
         print("Erro ao verificar rosto:", e)
