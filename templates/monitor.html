@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Monitor em Tempo Real{% endblock %}
+
+{% block content %}
+<div class="grid-2">
+    <div class="card">
+        <h2>📹 Monitor de Câmera</h2>
+        <div style="margin-top: 1.5rem;">
+            <img src="{{ url_for('camera.video_feed') }}" class="video-feed" alt="Feed de vídeo" id="video-stream">
+        </div>
+        <div style="margin-top: 1rem; text-align: center;">
+            <button onclick="stopCameraStream()" class="btn-danger">
+                ⏹️ Parar Câmera
+            </button>
+        </div>
+    </div>
+    
+    <div>
+        <div class="card">
+            <h2>⚡ Status em Tempo Real</h2>
+            <div style="margin-top: 1.5rem;">
+                <div id="status-display" class="status-display">
+                    <div id="status-icon" class="status-icon">🔍</div>
+                    <h3 id="status-text" style="color: #6b7280; margin-bottom: 0.5rem;">
+                        Aguardando detecção...
+                    </h3>
+                    <p id="status-user" style="font-size: 1.5rem; font-weight: bold; color: #111827;"></p>
+                    <p id="status-confidence" style="color: #6b7280; margin-top: 0.5rem;"></p>
+                </div>
+                
+                <div class="alert alert-info">
+                    <h4>ℹ️ Informações</h4>
+                    <p>
+                        🎥 O vídeo roda a <strong>30 FPS</strong> para visualização fluida.<br>
+                        🔍 O reconhecimento facial é feito a cada <strong>1 segundo</strong>.<br>
+                        🎯 Threshold configurado: <strong>0.7</strong><br>
+                        💡 <strong>Bolinha verde</strong> no canto indica quando está verificando.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="margin-top: 2rem;">
+            <h2>👥 Usuários Ativos</h2>
+            <div id="active-users" style="margin-top: 1rem;">
+                <p class="loading">Carregando...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/monitor.js') }}"></script>
+{% endblock %}

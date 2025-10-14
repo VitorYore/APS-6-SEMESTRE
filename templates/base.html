@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Controle de Acesso{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <h1>🔐 Sistema de Controle de Acesso Facial</h1>
+        <div class="nav-links">
+            <a href="/" class="{{ 'active' if request.path == '/' }}">📊 Dashboard</a>
+            <a href="/monitor" class="{{ 'active' if request.path == '/monitor' }}">📹 Monitor</a>
+            <a href="/users" class="{{ 'active' if request.path == '/users' }}">👥 Usuários</a>
+            <a href="/logs" class="{{ 'active' if request.path == '/logs' }}">📝 Logs</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

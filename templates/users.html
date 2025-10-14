@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Gerenciar Usuários{% endblock %}
+
+{% block content %}
+<div class="grid-2">
+    <div class="card">
+        <h2>➕ Cadastrar Novo Usuário</h2>
+        <form id="user-form" style="margin-top: 1.5rem;">
+            <label>Nome do Usuário</label>
+            <input type="text" id="user-name" placeholder="Ex: João Silva" required>
+            
+            <label>Nível de Acesso</label>
+            <select id="user-level" required>
+                <option value="1">Nível 1 - Acesso Básico</option>
+                <option value="2">Nível 2 - Acesso Intermediário</option>
+                <option value="3">Nível 3 - Acesso Total</option>
+            </select>
+            
+            <label>Captura de Foto</label>
+            <div style="position: relative;">
+                <video id="camera" width="100%" style="border-radius: 10px; background: #000; display: none;" autoplay></video>
+                <canvas id="canvas" style="display: none;"></canvas>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <button type="button" onclick="startCamera()" class="btn-primary" style="flex: 1;">
+                    📷 Ativar Câmera
+                </button>
+                <button type="button" onclick="capturePhoto()" class="btn-success" style="flex: 1;">
+                    📸 Capturar Foto
+                </button>
+            </div>
+            
+            <div id="photo-preview" class="photo-preview">
+                <p class="photo-success">✓ Foto capturada com sucesso!</p>
+                <img id="preview-img" alt="Preview">
+            </div>
+            
+            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">
+                💾 Cadastrar Usuário
+            </button>
+        </form>
+    </div>
+    
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2 style="margin: 0;">👥 Usuários Cadastrados</h2>
+            <button onclick="reloadEmbeddings()" class="btn-success">
+                🔄 Recarregar Sistema
+            </button>
+        </div>
+        <div id="users-list" style="margin-top: 1.5rem;">
+            <p class="loading">Carregando...</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/users.js') }}"></script>
+{% endblock %}

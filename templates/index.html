@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Sistema de Controle{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>📊 Dashboard - Estatísticas Gerais</h2>
+    <div class="grid-4" style="margin-top: 2rem;">
+        <div class="stat-card stat-primary">
+            <h3 id="total-users">0</h3>
+            <p>Usuários Cadastrados</p>
+        </div>
+        <div class="stat-card stat-success">
+            <h3 id="total-authorized">0</h3>
+            <p>Acessos Autorizados</p>
+        </div>
+        <div class="stat-card stat-danger">
+            <h3 id="total-denied">0</h3>
+            <p>Acessos Negados</p>
+        </div>
+        <div class="stat-card stat-warning">
+            <h3 id="total-attempts">0</h3>
+            <p>Total de Tentativas</p>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>🕐 Últimos Acessos</h2>
+    <div id="recent-logs" style="margin-top: 1.5rem;">
+        <p class="loading">Carregando...</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

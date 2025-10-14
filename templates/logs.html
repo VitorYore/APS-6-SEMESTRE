@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Histórico de Acessos{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>📝 Histórico de Acessos</h2>
+    
+    <div style="display: flex; gap: 1rem; margin: 1.5rem 0;">
+        <div style="flex: 1;">
+            <label>Buscar por Nome</label>
+            <input type="text" id="search-logs" placeholder="Digite o nome do usuário...">
+        </div>
+        <div style="flex: 1;">
+            <label>Filtrar por Status</label>
+            <select id="filter-status">
+                <option value="all">Todos</option>
+                <option value="AUTORIZADO">Autorizados</option>
+                <option value="NEGADO">Negados</option>
+            </select>
+        </div>
+    </div>
+    
+    <button id="clearLogsBtn" class="btn btn-sm btn-danger">Apagar Logs</button>
+    
+    <div style="overflow-x: auto; margin-top: 1.5rem;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background: #f3f4f6; text-align: left;">
+                    <th style="padding: 1rem; border-bottom: 2px solid #e5e7eb;">Data/Hora</th>
+                    <th style="padding: 1rem; border-bottom: 2px solid #e5e7eb;">Usuário</th>
+                    <th style="padding: 1rem; border-bottom: 2px solid #e5e7eb;">Nível</th>
+                    <th style="padding: 1rem; border-bottom: 2px solid #e5e7eb;">Status</th>
+                    <th style="padding: 1rem; border-bottom: 2px solid #e5e7eb;">Confiança</th>
+                </tr>
+            </thead>
+            <tbody id="logs-table">
+                <tr>
+                    <td colspan="5" class="loading">Carregando logs...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/logs.js') }}"></script>
+{% endblock %}
